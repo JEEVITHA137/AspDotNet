@@ -1,0 +1,39 @@
+﻿@model WebApplication4.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "Random";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Movies</h2>
+
+
+<table class="table-bordered" id="Movies">
+    <thead>
+    <th style="width:600px;padding:10px;">Movies</th>
+    <th style="width:600px;padding:10px;">Genre</th>
+    <tbody>
+    </tbody>
+    </thead>
+</table>
+@section scripts
+{
+    <script>
+      $(document).ready(function () {
+          var table = $("#Movies").DataTable({
+              ajax: {
+                  url: "/api/movie",
+                  dataSrc: ""
+              },
+              columns: [
+                  {
+                      data: "name",
+
+                  },
+                  {
+                      data: "genre"
+                  },
+              ]
+          });
+      });
+    </script>
+}

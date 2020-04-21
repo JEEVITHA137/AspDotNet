@@ -1,0 +1,62 @@
+﻿
+@model WebApplication4.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "RandomCustomers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Customers</h2>
+<table class="table-bordered" id="customers">
+    <thead>
+        <tr>
+            <th style="width:400px;padding:10px;">Customers</th>
+            <th style="width:400px;padding:10px;">MemberShip Type</th>
+            <th style="width:400px;padding:10px;">Delete</th>
+        </tr>
+    <tbody>
+    </tbody>
+    </thead>
+</table>
+@section scripts
+{
+    <script>
+    $(document).ready(function () {
+        var table= $("#customers").DataTable({
+            ajax: {
+                url: "/api/customer",
+                dataSrc:""
+            },
+            columns: [
+                {
+                    data: "name",
+                    render: function (data, type, customer) {
+                        return "<a href='/product/Edit/" + customer.id + "'>" + data +"</a>";
+                    }
+                },
+                {
+                    data:"membershipType.type"
+                },
+                {
+                    data: "id",
+                    render: function (data) {
+                        return "<button class='btn-link js-delete' data-customer-id=" + data + ">Delete</button>";
+                    }
+                }
+            ]
+        });
+        $("#customers").on("click", ".js-delete",function () {
+            var button = $(this);
+            bootbox.confirm("Are You sure You Want to delete this customer?", function (result) {
+                if (result) {
+                    $.ajax({
+                        url: "/api/customer/" + button.attr("data-customer-id"),
+                        method: "DELETE",
+                        success: function () {
+                            table.row(button.parents("tr")).remove().draw();
+                        }
+                    });
+                }
+            });
+        });
+    });
+    </script>
+}

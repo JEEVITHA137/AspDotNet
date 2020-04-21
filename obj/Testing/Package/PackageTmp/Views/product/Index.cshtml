@@ -1,0 +1,18 @@
+﻿
+@model WebApplication4.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@foreach (var Product in Model.product)
+{
+    if (Product.Id == Model.variables.id)
+    {
+        <h2>@Product.Name</h2>
+        <li>Genre:@Product.Genre</li>
+        <li>Released Date:@Product.ReleasedDate</li>
+        <li>Stock:@Product.Stock</li>
+    }
+
+}

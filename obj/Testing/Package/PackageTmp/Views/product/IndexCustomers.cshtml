@@ -1,0 +1,21 @@
+﻿
+@model WebApplication4.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "IndexCustomers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.variables.Name</h2>
+
+@foreach (var Customer in Model.customer)
+{
+    if (Customer.MembershipType.Id == Model.variables.id)
+    {
+        <li>MemberShipType:@Customer.MembershipType.Type</li>
+        if (Customer.Birthdate != null)
+        {
+            <li>BirthDate:@Customer.Birthdate</li>
+        }
+    }
+
+}
